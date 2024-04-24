@@ -2,15 +2,17 @@
 name: 'testresults'
 description: 'Format test results'
 inputs:
-  input-filename:
-    description: 'Input file (.zip or .tar.gz)'
+  xunit:
+    description: 'xunit test results file'
     required: true
-  output-dir:
-    description: 'Output directory'
+  html:
+    description: 'Output HTML file'
     required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.input-filename }}
-    - ${{ inputs.output-dir }}
+    - '--xunit'
+    - ${{ inputs.xunit }}
+    - '--html'
+    - ${{ inputs.html }}
