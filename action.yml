@@ -1,0 +1,16 @@
+# action.yml
+name: 'testresults'
+description: 'Format test results'
+inputs:
+  input-filename:
+    description: 'Input file (.zip or .tar.gz)'
+    required: true
+  output-dir:
+    description: 'Output directory'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.input-filename }}
+    - ${{ inputs.output-dir }}
