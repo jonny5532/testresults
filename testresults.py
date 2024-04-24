@@ -60,7 +60,7 @@ def render_results(results):
 			</tr>
 			<tr>
 				<td colspan="3" style="padding: 0; border-left-color: #222222; ">
-					<div style="padding: 5px 7px; font: 12px Courier, monospace; line-height: 13px; background: #222222; color: #e1e1e1; white-space: pre-wrap; max-height: 150px; overflow-y: scroll;">{}</div>
+					<div style="padding: 8px 12px; font: 12px Courier, monospace; line-height: 13px; background: #222222; color: #e1e1e1; white-space: pre-wrap; max-height: 150px; overflow-y: scroll;">{}</div>
 				</td>
 			</tr>""".format(
                 html.escape(error.attrib.get("type", "Error")),
