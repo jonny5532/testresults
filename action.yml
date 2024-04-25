@@ -8,6 +8,15 @@ inputs:
   html:
     description: 'Output HTML file'
     required: true
+outputs:
+  passes:
+    description: 'Number of passing tests'
+  failures:
+    description: 'Number of failing tests'
+  skipped:
+    description: 'Number of skipped tests'
+  summary:
+    description: 'Summary of test results'
 runs:
   using: 'docker'
   image: 'Dockerfile'
