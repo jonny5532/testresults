@@ -25,7 +25,7 @@ def parse_xunit(fn):
         "failures": failures,
         "skipped": skipped,
         "root": root,
-        #"dirname": os.path.dirname(fn),
+        "dirname": os.path.dirname(fn),
     }
 
 
@@ -68,26 +68,16 @@ def render_results(results):
                 html.escape(error.text),
             )
 
-        if False:
-            try:
-                slug = re.sub(r"[^_\-a-zA-Z0-9]", "", test.attrib["name"].replace(" ", "_"))
-                # lazy!
-                for res in results:
-                    screenshot = os.path.join(res["dirname"], slug + ".png")
-                    if os.path.exists(screenshot):
-                        ret += """
-                        <tr>
-                            <td colspan="3">
-                                <div style="overflow: scroll; max-width: 1000px">
-                                    <img src="%s">
-                                </div>
-                            </td>
-                        </tr>""" % screenshot_to_data_uri(
-                            screenshot
-                        )
-                        break
-            except Exception as e:
-                pass#print("Screenshot embedding failed:", e)
+        screenshot = f"screenshot_{test.attrib['classname']}.{test.attrib['name']}.png"
+
+        if os.path.exists(os.path.join(results[0]["dirname"], screenshot)):
+            ret += """<tr>
+                <td colspan="3">
+                    <div style="overflow: scroll; max-width: 1000px">
+                        <img src="%s" style="display: block">
+                    </div>
+                </td>
+            </tr>""" % html.escape(screenshot)
 
         return ret
 
@@ -124,21 +114,22 @@ def render_results(results):
                     groups[classname] = []
                 groups[classname].append(test)
 
+        # Note that we consider both <failure> and <error> as failures.
+
         sorted_groups = sorted(
             groups.items(),
             key=lambda kv: (
-                -sum(len(tc.findall("failure")) for tc in kv[1]),
+                -sum(len(tc.findall("failure")) for tc in kv[1])-sum(len(tc.findall("error")) for tc in kv[1]),
                 -sum(len(tc.findall("skipped")) for tc in kv[1]),
             ),
         )
 
         for kv in sorted_groups:
             kv[1].sort(key=lambda tc: (
-                -len(tc.findall("failure")),
+                -len(tc.findall("failure"))-len(tc.findall("error")),
                 -len(tc.findall("skipped")),
                 -float(tc.attrib["time"])
             ))
-
 
         collections = []
         for k, v in sorted_groups:

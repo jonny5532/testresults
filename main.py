@@ -11,7 +11,7 @@ args = parser.parse_args()
 xunit_results = []
 
 for fn in (args.xunit or []):
-    xunit_results.append(parse_xunit(open(fn)))
+    xunit_results.append(parse_xunit(fn))
 
 if args.html:
     with open(args.html, "w") as f:
