@@ -11,6 +11,9 @@ inputs:
   gitea-commit-status-url:
     description: 'Gitea commit status URL, eg: https://gitea.mydomain.com/api/v1/repos/myorg/myrepo/statuses/a62ef24?access_token=12345678'
     required: false
+  gitea-state:
+    description: 'Gitea state, one of pending/success/failure/error'
+    required: false
   gitea-target-url:
     description: 'Gitea target URL, eg: https://minio.mydomain.com/mybucket/myfolder/index.html'
     required: false
@@ -48,6 +51,8 @@ runs:
     - ${{ inputs.html }}
     - '--gitea-commit-status-url'
     - ${{ inputs.gitea-commit-status-url }}
+    - '--gitea-state'
+    - ${{ inputs.gitea-state }}
     - '--gitea-target-url'
     - ${{ inputs.gitea-target-url }}
     - '--s3-endpoint'

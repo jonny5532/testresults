@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--xunit", action="append")
 parser.add_argument("--html")
 parser.add_argument("--gitea-commit-status-url")
+parser.add_argument("--gitea-state")
 parser.add_argument("--gitea-target-url")
 parser.add_argument("--s3-endpoint")
 parser.add_argument("--s3-source")
@@ -45,7 +46,7 @@ if args.gitea_commit_status_url:
     report_commit_status(
         args.gitea_commit_status_url,
         summary,
-        state,
+        args.gitea_state or state,
         args.gitea_target_url,
     )
 
