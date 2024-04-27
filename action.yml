@@ -8,6 +8,27 @@ inputs:
   html:
     description: 'Output HTML file'
     required: true
+  gitea-commit-status-url:
+    description: 'Gitea commit status URL, eg: https://gitea.mydomain.com/api/v1/repos/myorg/myrepo/statuses/a62ef24?access_token=12345678'
+    required: false
+  gitea-target-url:
+    description: 'Gitea target URL, eg: https://minio.mydomain.com/mybucket/myfolder/index.html'
+    required: false
+  s3-endpoint:
+    description: 'S3 endpoint, eg: minio.mydomain.com'
+    required: false
+  s3-source:
+    description: 'S3 source, eg: /workspace/myfolder/'
+    required: false
+  s3-destination:
+    description: 'S3 destination, eg: mybucket/myfolder/'
+    required: false
+  s3-access-key:
+    description: 'S3 access key'
+    required: false
+  s3-secret-key:
+    description: 'S3 secret key'
+    required: false
 outputs:
   passes:
     description: 'Number of passing tests'
@@ -25,3 +46,18 @@ runs:
     - ${{ inputs.xunit }}
     - '--html'
     - ${{ inputs.html }}
+    - '--gitea-commit-status-url'
+    - ${{ inputs.gitea-commit-status-url }}
+    - '--gitea-target-url'
+    - ${{ inputs.gitea-target-url }}
+    - '--s3-endpoint'
+    - ${{ inputs.s3-endpoint }}
+    - '--s3-source'
+    - ${{ inputs.s3-source }}
+    - '--s3-destination'
+    - ${{ inputs.s3-destination }}
+    - '--s3-access-key'
+    - ${{ inputs.s3-access-key }}
+    - '--s3-secret-key'
+    - ${{ inputs.s3-secret-key }}
+  
