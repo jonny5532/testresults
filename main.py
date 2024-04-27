@@ -55,7 +55,9 @@ if args.s3_endpoint and args.s3_source and args.s3_destination:
         args.s3_source,
         ":s3:" + args.s3_destination,
         "--s3-endpoint", args.s3_endpoint,
+        "--s3-provider", "Other",
         "--s3-env-auth",
+        "--config", "",
     ], env={
         **os.environ,
         'AWS_ACCESS_KEY_ID': args.s3_access_key or "",
