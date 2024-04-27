@@ -1,4 +1,5 @@
-import urllib
+import json
+import urllib.request
 
 def report_commit_status(commit_status_url, summary, state, target_url):
     req = urllib.request.Request(commit_status_url)
