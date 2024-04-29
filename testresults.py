@@ -1,4 +1,5 @@
 import base64
+import glob
 import html
 import os
 import re
@@ -68,16 +69,15 @@ def render_results(results):
                 html.escape(error.text),
             )
 
-        screenshot = f"screenshot_{test.attrib['classname']}.{test.attrib['name']}.png"
 
-        if os.path.exists(os.path.join(results[0]["dirname"], screenshot)):
+        for screenshot in glob.glob(os.path.join(results[0]["dirname"], f"screenshot_{test.attrib['classname']}.{test.attrib['name']}*")):
             ret += """<tr>
                 <td colspan="3">
                     <div style="overflow: scroll; max-width: 1000px">
                         <img src="%s" style="display: block">
                     </div>
                 </td>
-            </tr>""" % html.escape(screenshot)
+            </tr>""" % html.escape(screenshot.rsplit("/", 1)[-1])
 
         return ret
 
